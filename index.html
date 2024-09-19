@@ -44,7 +44,6 @@
         #scratch-title {
             font-size: 48px;
             color: #FF6347; /* 행운복권 글씨색 변경 */
-            font-weight: bold;
             text-shadow: -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000; /* 테두리 추가 */
         }
         .number-section {
@@ -97,6 +96,7 @@
             box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
             background-color: #C0C0C0; /* 은색 배경 */
             position: relative;
+            pointer-events: none; /* 처음엔 클릭 불가 */
         }
         .canvas-container {
             width: 180px;
@@ -307,7 +307,7 @@
 
         // 스크래치 카드 클릭 가능하도록 변경
         scratchCards.forEach(card => {
-            card.style.pointerEvents = 'auto';
+            card.style.pointerEvents = 'auto'; // 클릭 가능하도록 변경
         });
 
         // 시작 버튼 숨기기
