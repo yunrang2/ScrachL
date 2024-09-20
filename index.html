@@ -306,14 +306,49 @@
 
         const coverImg = card.querySelector('.cover-img');
         coverImg.addEventListener('click', function () {
-            playRandomButtonSound();
             coverImg.style.display = 'none';
             card.style.backgroundColor = '#C0C0C0';
-            document.getElementById('scratchSound').play(); // 스크래치 긁을 때 사운드
+            document.getElementById('scratchSound').play(); // 스크래치 긁을 때 복권 사운드 재생
+
+            // 결과 확인 후 표시
+            checkAllScratched();
         });
     });
 
+    function checkAllScratched() {
+        const allScratched = Array.from(scratchCards).every(card => {
+            const coverImg = card.querySelector('.cover-img');
+            return coverImg.style.display === 'none';
+        });
+        
+        if (allScratched) {
+            displayResult();
+        }
+    }
+
+    function displayResult() {
+        let resultText = '';
+
+        const hasLuckyMatch = scratchNumbers.includes(luckyNumber);
+        const hasBonusMatch = scratchNumbers.includes(bonusNumber);
+
+        if (hasLuckyMatch) {
+            resultText = `당첨! (${convertAmountToKorean(luckyAmount)})`;
+        } else if (hasBonusMatch) {
+            resultText = `벌콘!`;
+        } else {
+            resultText = '꽝!';
+        }
+
+        const resultMessage = document.getElementById('result-message');
+        resultMessage.textContent = resultText;
+        resultMessage.style.display = 'block'; // 결과 메시지 보여줌
+
+        document.getElementById('playButton').style.display = 'block';
+    }
+
     document.getElementById('startButton').addEventListener('click', () => {
+        playRandomButtonSound(); // 시작 버튼 클릭 시 소리 재생
         document.getElementById('slotSound').play();
         slotMachineEffect('#lucky-number', `${luckyNumber} (${convertAmountToKorean(luckyAmount)})`);
         slotMachineEffect('#bonus-number', `${bonusNumber}`);
@@ -324,35 +359,8 @@
     });
 
     document.getElementById('playButton').addEventListener('click', () => {
+        playRandomButtonSound(); // 다시 플레이 버튼 클릭 시 소리 재생
         location.reload();
-    });
-
-    scratchCards.forEach((card) => {
-        card.addEventListener('click', () => {
-            const allScratched = Array.from(scratchCards).every(card => {
-                const coverImg = card.querySelector('.cover-img');
-                return coverImg.style.display === 'none';
-            });
-            if (allScratched) {
-                let resultText = '';
-                const hasLuckyMatch = scratchNumbers.includes(luckyNumber);
-                const hasBonusMatch = scratchNumbers.includes(bonusNumber);
-
-                if (hasLuckyMatch) {
-                    resultText = `당첨! (${convertAmountToKorean(luckyAmount)})`;
-                } else if (hasBonusMatch) {
-                    resultText = `벌콘!`;
-                } else {
-                    resultText = '꽝!';
-                }
-
-                const resultMessage = document.getElementById('result-message');
-                resultMessage.textContent = resultText;
-                resultMessage.style.display = 'block';
-
-                document.getElementById('playButton').style.display = 'block';
-            }
-        });
     });
 </script>
 
