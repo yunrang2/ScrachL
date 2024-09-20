@@ -211,9 +211,7 @@
 <audio id="buttonSound"></audio>
 <audio id="slotSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/slot-machine.mp3"></audio>
 <audio id="slapSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/Slap Sound.mp3"></audio>
-<audio id="winSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/딴쵸.mp3"></audio>
-<audio id="bonusSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/아싸라비아 콜롬비아.mp3"></audio>
-<audio id="loseSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/아무것도 못하죠.mp3"></audio>
+<audio id="scratchSound" src="https://raw.githubusercontent.com/yunrang2/upload/refs/heads/master/복권.mp3"></audio>
 
 <script>
     let luckyNumber = Math.floor(Math.random() * 9) + 1; // 행운 숫자
@@ -294,8 +292,8 @@
                 clearInterval(interval);
                 document.querySelector(`${elementId} .number-box`).textContent = finalValue;
                 document.getElementById('slapSound').play();
-                slotSound.pause(); // 숫자가 표시되면 슬롯 사운드 중지
-                slotSound.currentTime = 0; // 슬롯 사운드 시간 초기화
+                slotSound.pause();
+                slotSound.currentTime = 0;
             }
         }, 50);
     }
@@ -311,6 +309,7 @@
             playRandomButtonSound();
             coverImg.style.display = 'none';
             card.style.backgroundColor = '#C0C0C0';
+            document.getElementById('scratchSound').play(); // 스크래치 긁을 때 사운드
         });
     });
 
@@ -341,13 +340,10 @@
 
                 if (hasLuckyMatch) {
                     resultText = `당첨! (${convertAmountToKorean(luckyAmount)})`;
-                    document.getElementById('winSound').play();
                 } else if (hasBonusMatch) {
                     resultText = `벌콘!`;
-                    document.getElementById('bonusSound').play();
                 } else {
                     resultText = '꽝!';
-                    document.getElementById('loseSound').play();
                 }
 
                 const resultMessage = document.getElementById('result-message');
