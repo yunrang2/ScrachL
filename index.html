@@ -225,7 +225,7 @@
 
     let scratchNumbers = generateUniqueNumbers(3, 1, 9, [luckyNumber, bonusNumber]);
     const randomValue = Math.random();
-    if (randomValue < 0.15) {
+    if (randomValue < 0.20) {
         scratchNumbers[Math.floor(Math.random() * 3)] = luckyNumber;
     } else if (randomValue < 0.4) {
         scratchNumbers[Math.floor(Math.random() * 3)] = bonusNumber;
